@@ -2,13 +2,17 @@ import pygame
 import values
 from naveJogador import NaveJogador
 from naveInimiga import NaveInimiga
+from usuario import Usuario
+import manipularArquivos 
 
-# Inicializações do Pygame
+
 pygame.init()
 
+settings = manipularArquivos.ler_configuracoes()
+
 # Tela do Pygame
-screen_width = values.screen_width
-screen_height = values.screen_height
+screen_width = settings["Tela"]["screen_width"]
+screen_height = settings["Tela"]["screen_height"]
 surface = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption('MilkWay')
 pygame.display.set_icon(pygame.image.load("../assets/images/naveEspacial4.png"))
@@ -18,8 +22,8 @@ background = pygame.image.load("../assets/images/espaço.gif")
 
 # Criação de uma instância da NaveJogador
 nave_jogador = NaveJogador(
-    imagem= "../assets/images/naveEspacial4.png",
-    velocidade=2, 
+    imagem= "../assets/images/naveEspacial.png",
+    velocidade=settings["NaveJogador"]["velocidade"], 
     posicao=[350, 400], 
     pontos_vida=100, 
     potencia_tiro=10, 
@@ -44,6 +48,7 @@ def inicio_jogo():
 
         # Verificar teclas pressionadas para movimentar a nave
         teclas = pygame.key.get_pressed()
+
         if teclas[pygame.K_LEFT] and nave_jogador.posicao[0] > 0:
             nave_jogador.posicao[0] -= nave_jogador.velocidade
         if teclas[pygame.K_RIGHT] and nave_jogador.posicao[0] < screen_width - nave_jogador.imagem.get_width():

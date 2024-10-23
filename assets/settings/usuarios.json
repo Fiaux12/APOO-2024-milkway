@@ -1,0 +1,14 @@
+{
+    "Usuarios": [
+        {
+            "nome": "Glaucus",
+            "pontos": 0,
+            "save_point": 0
+        },
+        {
+            "nome": "Amanda",
+            "pontos": 0,
+            "save_point": 0
+        }
+    ]
+}
