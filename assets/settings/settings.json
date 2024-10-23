@@ -1,0 +1,14 @@
+{
+    "Tela": {
+        "screen_width" : 900,
+        "screen_height" : 500
+    },
+    "NaveJogador": {
+        "velocidade" : 0.5,
+        "pontos_vida" : 100,
+        "potencia_tiro" : 100,
+        "tempo_recarga" : 100        
+    }
+
+      
+}

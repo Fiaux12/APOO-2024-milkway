@@ -1,8 +1,17 @@
+import pandas as pd
 import json
 import os
-import pandas as pd
 
+SETTINGS_DATA_FILE = "../assets/settings/settings.json"
 USER_DATA_FILE = "../assets/settings/usuarios.json"
+
+# Função para carregar os dados de um arquivo JSON em um DataFrame
+def ler_configuracoes():
+    if os.path.exists(SETTINGS_DATA_FILE):
+        with open(SETTINGS_DATA_FILE, "r") as arquivo:
+            configuracoes = json.load(arquivo)
+        return pd.DataFrame(configuracoes)
+    
 
 # Função para carregar os dados de um arquivo JSON em um DataFrame
 def carregar_usuarios():
@@ -30,3 +39,5 @@ def adicionar_usuario(nome, pontos, save_point):
 
     df = pd.concat([df, novo_usuario], ignore_index=True)
     salvar_usuarios(df)
+
+
