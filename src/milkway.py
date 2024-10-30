@@ -4,11 +4,24 @@ from naveJogador import NaveJogador
 from naveInimiga import NaveInimiga
 from usuario import Usuario
 import manipularArquivos 
-
+from powerUp import powerUp
 
 pygame.init()
 
-settings = manipularArquivos.ler_configuracoes()
+#settings = manipularArquivos.ler_configuracoes()
+settings = {
+    "Tela": {
+        "screen_width": 900,
+        "screen_height": 500
+    },
+    "NaveJogador": {
+        "velocidade" : 0.5,
+        "pontos_vida" : 100,
+        "potencia_tiro" : 100,
+        "tempo_recarga" : 100
+    }
+}
+
 
 # Tela do Pygame
 screen_width = settings["Tela"]["screen_width"]
@@ -30,7 +43,20 @@ nave_jogador = NaveJogador(
     tempo_recarga=1.5, 
     aprimoramentos={}
 )
+powerUpVel = powerUp(
+    imagem="../assets/images/powerUpVEL.png",
+    posicao=[200, 300],
+    tipo='vel',
+    valor=2  # Aumenta a velocidade em 2 unidades
+)
 
+powerUpTiro = powerUp(
+    imagem="../assets/images/powerupTIRO.png",
+    posicao=[400, 300],
+    tipo='potencia_tiro',
+    valor=5  # Aumenta a potência do tiro em 5 unidades
+)
+powerUps = [powerUpVel,powerUpTiro]
 def draw_background():
     """Desenha a imagem de fundo na tela."""
     surface.blit(background, (0, 0))
@@ -60,7 +86,10 @@ def inicio_jogo():
 
         # Desenhar a nave do jogador
         surface.blit(nave_jogador.imagem, nave_jogador.posicao)
-
+        for powerUp in powerUps:
+            if not powerUp.coletado:
+                powerUp.draw(surface)
+                powerUp.checar_colisao(nave_jogador)
         # Atualizar a tela
         pygame.display.flip()
 
