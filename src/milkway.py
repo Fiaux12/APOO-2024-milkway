@@ -52,7 +52,7 @@ powerUpVel = powerUp(
 
 powerUpTiro = powerUp(
     imagem="../assets/images/powerupTIRO.png",
-    posicao=[400, 300],
+    posicao=[800, 300],
     tipo='potencia_tiro',
     valor=5  # Aumenta a potência do tiro em 5 unidades
 )
@@ -77,17 +77,21 @@ def inicio_jogo():
 
         if teclas[pygame.K_LEFT] and nave_jogador.posicao[0] > 0:
             nave_jogador.posicao[0] -= nave_jogador.velocidade
+            nave_jogador.rect.topleft = nave_jogador.posicao
         if teclas[pygame.K_RIGHT] and nave_jogador.posicao[0] < screen_width - nave_jogador.imagem.get_width():
             nave_jogador.posicao[0] += nave_jogador.velocidade
+            nave_jogador.rect.topleft = nave_jogador.posicao
         if teclas[pygame.K_UP] and nave_jogador.posicao[1] > 0:
             nave_jogador.posicao[1] -= nave_jogador.velocidade
+            nave_jogador.rect.topleft = nave_jogador.posicao
         if teclas[pygame.K_DOWN] and nave_jogador.posicao[1] < screen_height - nave_jogador.imagem.get_height():
             nave_jogador.posicao[1] += nave_jogador.velocidade
+            nave_jogador.rect.topleft = nave_jogador.posicao
 
         # Desenhar a nave do jogador
         surface.blit(nave_jogador.imagem, nave_jogador.posicao)
         for powerUp in powerUps:
-            if not powerUp.coletado:
+            if powerUp.coletado==False:
                 powerUp.draw(surface)
                 powerUp.checar_colisao(nave_jogador)
         # Atualizar a tela
