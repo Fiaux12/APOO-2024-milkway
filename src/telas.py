@@ -1,6 +1,8 @@
 import pygame
 import manipularArquivos 
-from posicao import Posicao
+from naveJogador import NaveJogador
+import niveis 
+import time
 
 
 
@@ -18,6 +20,8 @@ settings = manipularArquivos.ler_configuracoes()
 background = pygame.image.load("../assets/images/espaço.gif")
 tela_inicial = pygame.image.load("../assets/images/NovoLogo.jpg")
 tela_melhores_jogadores = pygame.image.load("../assets/images/melhoresJogadores.png")
+tela_criar_usuario = pygame.image.load("../assets/images/criarUsuario.png")
+tela_menu = pygame.image.load("../assets/images/menu.png")
 
 
 #Cores
@@ -37,7 +41,7 @@ def desenhar_texto(texto, fonte, cor, pos, surface):
 
 
 def menu(surface, fonte):
-    surface.fill(PRETO)
+    surface.blit(tela_menu, (0, 0))
     
     desenhar_texto("MILKWAY", fonte, BRANCO, (425, 100), surface)
     
@@ -52,8 +56,9 @@ def menu(surface, fonte):
 
 
 def novo_jogo(surface, nave_jogador, naves_inimigas, screen_width, screen_height):
+    
+    
     surface.blit(background, (0, 0))
-    #Atualiza os movimentos do jogador
     nave_jogador.update(screen_width, screen_height, surface)
 
     for nave in naves_inimigas[:]:  
@@ -80,8 +85,9 @@ def melhores_jogadores(surface, top_usuarios):
         desenhar_texto(nome, fonte_texto, AZUL, (45, posicao_y), surface)
         desenhar_texto(texto, fonte_texto, AZUL, (160, posicao_y), surface)
 
-
-
+#TODO colocar o estado de NOVO_JOGO em uma função
+# def add_usuario(surface,usuarios, estado):
+#     pass
 
 def desenha_tela_inicial(surface):
     surface.blit(tela_inicial, (0, -200))
