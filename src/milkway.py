@@ -4,6 +4,7 @@ from naveJogador import NaveJogador
 from naveInimiga import NaveInimiga
 from usuario import Usuario
 import manipularArquivos 
+import niveis 
 
 
 pygame.init()
@@ -15,14 +16,16 @@ screen_width = settings["Tela"]["screen_width"]
 screen_height = settings["Tela"]["screen_height"]
 surface = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption('MilkWay')
-pygame.display.set_icon(pygame.image.load("../assets/images/naveEspacial4.png"))
+pygame.display.set_icon(pygame.image.load("../assets/images/naveEspacial5.png"))
+
+
 
 # Carregar imagens
 background = pygame.image.load("../assets/images/espaço.gif")
 
 # Criação de uma instância da NaveJogador
 nave_jogador = NaveJogador(
-    imagem= "../assets/images/naveEspacial.png",
+    imagem= "../assets/images/naveEspacial5.png",
     velocidade=settings["NaveJogador"]["velocidade"], 
     posicao=[350, 400], 
     pontos_vida=100, 
@@ -30,6 +33,10 @@ nave_jogador = NaveJogador(
     tempo_recarga=1.5, 
     aprimoramentos={}
 )
+
+
+naves_inimigas = niveis.nivel1(surface)
+
 
 def draw_background():
     """Desenha a imagem de fundo na tela."""
@@ -51,15 +58,21 @@ def inicio_jogo():
 
         if teclas[pygame.K_LEFT] and nave_jogador.posicao[0] > 0:
             nave_jogador.posicao[0] -= nave_jogador.velocidade
-        if teclas[pygame.K_RIGHT] and nave_jogador.posicao[0] < screen_width - nave_jogador.imagem.get_width():
+        if teclas[pygame.K_RIGHT] and nave_jogador.posicao[0] < (screen_width+180) - nave_jogador.imagem.get_width():
             nave_jogador.posicao[0] += nave_jogador.velocidade
+        if teclas[pygame.K_DOWN] and nave_jogador.posicao[1] < (screen_height+180) - nave_jogador.imagem.get_height():
+            nave_jogador.posicao[1] += nave_jogador.velocidade
         if teclas[pygame.K_UP] and nave_jogador.posicao[1] > 0:
             nave_jogador.posicao[1] -= nave_jogador.velocidade
-        if teclas[pygame.K_DOWN] and nave_jogador.posicao[1] < screen_height - nave_jogador.imagem.get_height():
-            nave_jogador.posicao[1] += nave_jogador.velocidade
 
-        # Desenhar a nave do jogador
-        surface.blit(nave_jogador.imagem, nave_jogador.posicao)
+
+        nave_jogador_redimensionada = pygame.transform.scale(nave_jogador.imagem, (100, 100))
+        surface.blit(nave_jogador_redimensionada, nave_jogador.posicao)
+
+
+        for nave in naves_inimigas[:]:  
+            nave.update()  
+            surface.blit(nave.imagem, nave.posicao) 
 
         # Atualizar a tela
         pygame.display.flip()
