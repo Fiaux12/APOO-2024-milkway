@@ -7,7 +7,22 @@
         },
         {
             "nome": "Amanda",
-            "pontos": 0,
+            "pontos": 10,
+            "save_point": 0
+        },
+        {
+            "nome": "Julia",
+            "pontos": 30,
+            "save_point": 0
+        },
+        {
+            "nome": "Erick",
+            "pontos": 15,
+            "save_point": 0
+        },
+        {
+            "nome": "Lucas",
+            "pontos": 5,
             "save_point": 0
         }
     ]

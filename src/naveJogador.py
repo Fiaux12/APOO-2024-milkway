@@ -12,7 +12,7 @@ class NaveJogador(NaveBase):
     def calcularAprimoramento():
         raise NotImplementedError("Este método deve ser implementado")
     
-    def update(self, screen_width, screen_height):
+    def update(self, screen_width, screen_height, surface):
         # Verificar teclas pressionadas para movimentar a nave
         teclas = pygame.key.get_pressed()
         if teclas[pygame.K_LEFT] and self.posicao[0] > 0:
@@ -25,4 +25,4 @@ class NaveJogador(NaveBase):
             self.posicao[1] -= self.velocidade
         
         nave_jogador_redimensionada = pygame.transform.scale(self.imagem, (100, 100))
-        self.blit(nave_jogador_redimensionada, self.posicao)
+        surface.blit(nave_jogador_redimensionada, self.posicao)

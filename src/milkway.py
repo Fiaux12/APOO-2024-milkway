@@ -44,6 +44,10 @@ naves_inimigas = niveis.nivel1(surface)
 def inicio_jogo():
     global estado
     tempo_inicial = pygame.time.get_ticks() 
+
+    usuarios = manipularArquivos.carregar_usuarios()
+    top_usuarios = usuarios.nlargest(3, 'pontos')
+
     run = True
     while run:
         if estado == TELA_INICIAL:
@@ -72,19 +76,14 @@ def inicio_jogo():
         if estado == MENU:
             telas.menu(surface, fonte)
         elif estado == JOGO:
-            telas.jogo(surface, fonte)
+            telas.novo_jogo(surface, nave_jogador, naves_inimigas, screen_width, screen_height)
         elif estado == MELHORES_JOGADORES:
-            telas.melhores_jogadores(surface)
+            telas.melhores_jogadores(surface, top_usuarios)
 
         # Desenhar fundo
         # telas.draw_background()
 
-        #Atualiza os movimentos do jogador
-        # nave_jogador.update(screen_width, screen_height, surface)
-
-        # for nave in naves_inimigas[:]:  
-        #     nave.update()  
-        #     surface.blit(nave.imagem, nave.posicao) 
+        
 
         # Atualizar a tela
         pygame.display.flip()
