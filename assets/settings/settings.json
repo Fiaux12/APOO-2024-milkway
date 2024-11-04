@@ -1,7 +1,7 @@
 {
     "Tela": {
         "screen_width" : 900,
-        "screen_height" : 500
+        "screen_height" : 600
     },
     "NaveJogador": {
         "velocidade" : 0.5,

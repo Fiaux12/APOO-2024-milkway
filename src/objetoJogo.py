@@ -7,6 +7,7 @@ class ObjetoJogo:
 
         self.velocidade = velocidade
         self.posicao = posicao
+        self.rect = self.imagem.get_rect(topleft=posicao)
 
     def update():
         raise NotImplementedError("Este método deve ser implementado")
