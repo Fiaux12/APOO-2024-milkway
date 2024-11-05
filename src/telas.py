@@ -1,11 +1,22 @@
 import pygame
 import manipularArquivos 
 from naveJogador import NaveJogador
+from powerUp import PowerUp
 import niveis 
 import time
-
-
-
+powerUpVel = PowerUp(
+    imagem="../assets/images/powerUpVEL.png",
+    posicao=[200, 300],
+    tipo='vel',
+    valor=0.5  # Aumenta a velocidade em 0.5 unidades
+)
+powerUpTiro = PowerUp(
+    imagem="../assets/images/powerupTIRO.png",
+    posicao=[800, 300],
+    tipo='potencia_tiro',
+    valor=1  # Aumenta a potência do tiro em 1 unidade
+)
+powerUps = [powerUpVel,powerUpTiro]
 # Estados do jogo
 TELA_INICIAL = "tela_inicial"
 MENU = "menu"
@@ -64,7 +75,10 @@ def novo_jogo(surface, nave_jogador, naves_inimigas, screen_width, screen_height
     for nave in naves_inimigas[:]:  
         nave.update()  
         surface.blit(nave.imagem, nave.posicao) 
-
+    for powerUp in powerUps:
+        if powerUp.coletado==False:
+            powerUp.draw(surface)
+            powerUp.checar_colisao(nave_jogador)
 def melhores_jogadores(surface, top_usuarios):
     fonte_titulo = pygame.font.SysFont("arial", 30, True, False)
     fonte_texto = pygame.font.SysFont("arial", 25, True, False)
