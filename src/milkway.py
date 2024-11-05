@@ -14,6 +14,7 @@ MENU = "menu"
 NOVO_JOGO = "novo_jogo"
 CONTINUAR = "continuar"
 MELHORES_JOGADORES = "melhores_jogadores"
+GAME_OVER = "game_over"
 estado = TELA_INICIAL
 settings = manipularArquivos.ler_configuracoes()
 
@@ -121,6 +122,10 @@ def inicio_jogo():
 
         elif estado == MELHORES_JOGADORES:
             telas.melhores_jogadores(surface, top_usuarios)
+
+        elif estado == GAME_OVER:
+            telas.desenha_tela_game_over(surface)
+
 
         pygame.display.flip()
 
