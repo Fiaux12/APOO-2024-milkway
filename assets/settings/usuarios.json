@@ -124,6 +124,11 @@
             "nome": "Ana",
             "pontos": 0,
             "save_point": 0
+        },
+        {
+            "nome": "aaaaa",
+            "pontos": 0,
+            "save_point": 0
         }
     ]
 }

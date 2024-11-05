@@ -121,7 +121,7 @@ def inicio_jogo():
                 pygame.display.flip()
 
         elif estado == MELHORES_JOGADORES:
-            telas.melhores_jogadores(surface, top_usuarios)
+            telas.melhores_jogadores(surface, top_usuarios, fonte)
 
         elif estado == GAME_OVER:
             telas.desenha_tela_game_over(surface)

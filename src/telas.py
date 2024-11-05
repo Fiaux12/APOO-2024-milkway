@@ -34,6 +34,7 @@ AZUL = (0 , 0, 129)
 botao_continuar = pygame.Rect(350, 200, 250, 50)
 botao_novo_jogo = pygame.Rect(350, 300, 250, 50)
 botao_melhores_jogadores = pygame.Rect(350, 400, 250, 50)
+botao_voltar = pygame.Rect(20, 540, 80, 30)
 
 
 def desenhar_texto(texto, fonte, cor, pos, surface):
@@ -64,7 +65,7 @@ def novo_jogo(surface, nave_jogador, naves_inimigas, screen_width, screen_height
         nave.update()  
         surface.blit(nave.imagem, nave.posicao) 
 
-def melhores_jogadores(surface, top_usuarios):
+def melhores_jogadores(surface, top_usuarios, fonte):
     fonte_titulo = pygame.font.SysFont("arial", 30, True, False)
     fonte_texto = pygame.font.SysFont("arial", 25, True, False)
     surface.blit(tela_melhores_jogadores, (0, 0))
@@ -83,6 +84,12 @@ def melhores_jogadores(surface, top_usuarios):
         texto = f".............................................................. {pontos}"
         desenhar_texto(nome, fonte_texto, AZUL, (45, posicao_y), surface)
         desenhar_texto(texto, fonte_texto, AZUL, (160, posicao_y), surface)
+    
+    pygame.draw.rect(surface, BRANCO, botao_voltar)
+    desenhar_texto("Voltar", fonte, AZUL, (botao_voltar.x +10, botao_voltar.y ),surface)
+
+
+
 
 #TODO colocar o estado de NOVO_JOGO em uma função
 # def add_usuario(surface,usuarios, estado):
