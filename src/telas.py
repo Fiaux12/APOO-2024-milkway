@@ -5,7 +5,7 @@ from powerUp import PowerUp
 import niveis 
 import time
 powerUpVel = PowerUp(
-    imagem="../assets/images/powerUpVEL.png",
+    imagem="../assets/images/powerupVEL.png",
     posicao=[200, 300],
     tipo='vel',
     valor=0.5  # Aumenta a velocidade em 0.5 unidades
@@ -73,7 +73,7 @@ def novo_jogo(surface, nave_jogador, naves_inimigas, screen_width, screen_height
     nave_jogador.update(screen_width, screen_height, surface)
 
     for nave in naves_inimigas[:]:  
-        nave.update()  
+        nave.update(nave_jogador)  
         surface.blit(nave.imagem, nave.posicao) 
     for powerUp in powerUps:
         if powerUp.coletado==False:

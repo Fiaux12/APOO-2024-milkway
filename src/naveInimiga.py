@@ -7,8 +7,10 @@ class NaveInimiga(NaveBase):
         self.tempo_parado = tempo_parado  
         self.tempo_parado_decorrido = 0  
         self.movendo = False
-        
-
+        self.rect = self.imagem.get_rect(topleft=posicao)
+    def checar_colisao(self, nave):
+        if self.rect.colliderect(nave.rect):
+            print("Bateu na nave inimiga!")
 
     def atirar():
         raise NotImplementedError("Este método deve ser implementado")
@@ -20,7 +22,7 @@ class NaveInimiga(NaveBase):
         self.imagem = pygame.transform.rotate(self.imagem, 180)
 
 
-    def update(self):
+    def update(self,nave):
         tempo_atual = pygame.time.get_ticks()
 
         # Verifica se já passou o tempo de parada
@@ -31,7 +33,7 @@ class NaveInimiga(NaveBase):
         if self.movendo:
             self.posicao[1] += self.velocidade  # Movimenta para baixo conforme a velocidade
             self.rect.topleft=self.posicao      #Atualiza a colisão da nave de acordo com a posição
-
+        self.checar_colisao(nave)
         # # Verifica se a nave saiu da tela e retorna um sinal para removê-la
         # if self.posicao[1] > 600:  # Suponha que 600 seja a altura da tela
         #     return True  # Retorna True se a nave deve ser removida (fora da tela)
