@@ -5,8 +5,7 @@ import niveis
 import manipularArquivos 
 import telas 
 import time
-import bullet
-
+from bullet import Bullet
 
 pygame.init()
 # Estados do jogo
@@ -90,6 +89,7 @@ def inicio_jogo():
                     if event.type == pygame.QUIT:
                         pygame.quit()
                         return
+                  
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         if input_box.collidepoint(event.pos):
                             active = not active
