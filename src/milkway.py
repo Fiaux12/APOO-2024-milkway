@@ -5,6 +5,7 @@ import niveis
 import manipularArquivos 
 import telas 
 import time
+import bullet
 
 
 pygame.init()
@@ -77,6 +78,7 @@ def inicio_jogo():
             telas.menu(surface, fonte)
         elif estado == CONTINUAR:
             telas.novo_jogo(surface,nave_jogador, naves_inimigas, screen_width, screen_height)
+
         elif estado == NOVO_JOGO:
             global active, text, color
             input_box = pygame.Rect(80, 320, 320, 35) 

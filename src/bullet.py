@@ -1,23 +1,19 @@
 import pygame
-from naveBase import NaveBase
 from objetoJogo import ObjetoJogo
+import time
+  
+#Criação do bullet com desenho dessa vez
 
+bullet_image = pygame.image.load("../assets/images/asteroideAzul1.png") 
 
-class Bullet(ObjetoJogo):
-    def __init__(self, velocidade, posicao, potencia_tiro):
-        super().__init__( velocidade, posicao, potencia_tiro)
-        self.ativo = True 
-        self.imagem = '../assets/images/251-2512365_heart-pixel-art-hd-png-download.png'
+class Bullet:
+    def __init__(self, x, y):
+        self.image = bullet_image
+        self.rect = self.image.get_rect(center=(x, y))
+        self.speed = 7
 
-    def shoot(self):
-        self.posicao[1] -= self.velocidade
-        if self.posicao[1] < 0:
-            self.ativo = False
+    def move(self):
+        self.rect.y -= self.speed
 
-    def desenhar(self, tela):
-        if self.ativo:
-            tela.blit(self.imagem, self.posicao)
-
-
-    def __del__(self):
-        self.ativo = False
+    def draw(self, surface):
+        surface.blit(self.image, self.rect)
