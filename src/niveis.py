@@ -65,14 +65,6 @@ def nivel1(surface):
     nave_inimigo_redimensionada4 = pygame.transform.scale(nave_inimiga4.imagem, (70, 70))
     surface.blit(nave_inimigo_redimensionada4, nave_inimiga4.posicao)
     nave_inimiga4.rect = nave_inimigo_redimensionada4.get_rect(topleft=nave_inimiga4.posicao) 
-# CONFLITO AQUI
-#     nave_inimigo_redimensionada2 = pygame.transform.scale(nave_inimiga2.imagem, (70, 70))
-#     surface.blit(nave_inimigo_redimensionada2, nave_inimiga2.posicao)
-#     nave_inimigo_redimensionada3 = pygame.transform.scale(nave_inimiga3.imagem, (70, 70))
-#     surface.blit(nave_inimigo_redimensionada3, nave_inimiga3.posicao)
-#     nave_inimigo_redimensionada4 = pygame.transform.scale(nave_inimiga4.imagem, (70, 70))
-#     surface.blit(nave_inimigo_redimensionada4, nave_inimiga4.posicao)
-
 
     naves_inimigas = []
     naves_inimigas.append(nave_inimiga1)

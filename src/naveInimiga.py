@@ -13,8 +13,6 @@ class NaveInimiga(NaveBase):
         if self.rect.colliderect(nave.rect):
             print("Bateu na nave inimiga!")
 
-# CONFLITO
-#         self.movendo = False 
 
 
     def atirar():
@@ -29,10 +27,6 @@ class NaveInimiga(NaveBase):
 
 
     def update(self,nave):
-
-# CONFLITO 
-#     def update(self):
-
         tempo_atual = pygame.time.get_ticks()
 
         # Verifica se já passou o tempo de parada

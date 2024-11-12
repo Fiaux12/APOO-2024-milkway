@@ -89,11 +89,6 @@ def novo_jogo(surface, nave_jogador, naves_inimigas, screen_width, screen_height
             powerUp.draw(surface)
             powerUp.checar_colisao(nave_jogador)
 
-# CONFLITO AQUI
-#         nave.update()  
-#         surface.blit(nave.imagem, nave.posicao) 
-
-
 def melhores_jogadores(surface, top_usuarios):
     fonte_titulo = pygame.font.SysFont("arial", 30, True, False)
     fonte_texto = pygame.font.SysFont("arial", 25, True, False)
