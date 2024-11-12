@@ -61,13 +61,13 @@ def menu(surface, fonte):
     desenhar_texto("MILKWAY", fonte, BRANCO, (425, 100), surface)
     
     pygame.draw.rect(surface, BRANCO, botao_continuar)
-    desenhar_texto("1. Continuar", fonte, PRETO, (botao_continuar.x + 80, botao_continuar.y + 10),surface)
+    desenhar_texto("1. Continuar", fonte, PRETO, (botao_continuar.x + 75, botao_continuar.y + 10),surface)
     
     pygame.draw.rect(surface, BRANCO, botao_novo_jogo)
-    desenhar_texto("2. Novo Jogo", fonte, PRETO, (botao_novo_jogo.x + 70, botao_novo_jogo.y + 10),surface)
+    desenhar_texto("2. Novo Jogo", fonte, PRETO, (botao_novo_jogo.x + 65, botao_novo_jogo.y + 10),surface)
     
     pygame.draw.rect(surface, BRANCO, botao_melhores_jogadores)
-    desenhar_texto("3. Melhores Jogadores", fonte, PRETO, (botao_melhores_jogadores.x + 30, botao_melhores_jogadores.y + 10),surface)
+    desenhar_texto("3. Melhores Jogadores", fonte, PRETO, (botao_melhores_jogadores.x + 20, botao_melhores_jogadores.y + 10),surface)
 
 
 def novo_jogo(surface, nave_jogador, naves_inimigas, screen_width, screen_height):
@@ -76,9 +76,9 @@ def novo_jogo(surface, nave_jogador, naves_inimigas, screen_width, screen_height
     nave_jogador.update(screen_width, screen_height, surface)
 
     for nave in naves_inimigas[:]:  
-
         nave.update(nave_jogador)  
         surface.blit(nave.imagem, nave.posicao) 
+
     for powerUp in powerUps:
         if powerUp.coletado==False:
             powerUp.draw(surface)
@@ -126,13 +126,17 @@ def add_usuario(surface,usuarios, fonte):
     input_box = pygame.Rect(80, 320, 320, 35) 
     active = True  
     texto = '' 
-    max_nome = 10
+    max_nome = 10        
 
     while active:
+       
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 return
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT:  
+                    return MENU
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
                     if  texto in usuarios['nome'].values:
@@ -153,7 +157,13 @@ def add_usuario(surface,usuarios, fonte):
                 elif len(texto) < max_nome:
                     texto += event.unicode  
 
+        
+        
         surface.blit(tela_criar_usuario, (0, 0))
+        pygame.draw.polygon(surface, AZUL, 
+            [(45, 600 - 40),     
+            (75, 600 - 65),      
+            (75, 600 - 15)])
         pygame.draw.rect(surface, BRANCO, input_box, 2)
         txt_surface = fonte.render(texto, True, BRANCO)
         surface.blit(txt_surface, (input_box.x + 5, input_box.y + 5))
