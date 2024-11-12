@@ -179,14 +179,25 @@ def desenha_tela_inicial(surface):
 
 
 def checar_colisao_bala_nave(balas, naves_inimigas):
+    balas_para_remover = []
+    naves_para_remover = []
+
     for bala in balas:
         for nave in naves_inimigas:
             if bala.rect.colliderect(nave.rect):
-                nave.pontos_vida -= 10  
+                nave.pontos_vida -= 10 
+                print(nave.pontos_vida) 
 
-                print(nave.pontos_vida)
-                
-                balas.remove(bala)  
-                if nave.pontos_vida <= 0:
-                    naves_inimigas.remove(nave) 
+                if bala not in balas_para_remover:
+                    balas_para_remover.append(bala)
 
+                if nave.pontos_vida <= 0 and nave not in naves_para_remover:
+                    naves_para_remover.append(nave)
+
+                break  
+
+    for bala in balas_para_remover:
+        balas.remove(bala)
+
+    for nave in naves_para_remover:
+        naves_inimigas.remove(nave)
