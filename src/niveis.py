@@ -3,6 +3,7 @@ import pygame
 from naveInimiga import NaveInimiga
 from powerUp import PowerUp
 
+
 def nivel1(surface):
     nave_inimiga1 = NaveInimiga(
         imagem= "../assets/images/naveEspacial.png",
@@ -53,6 +54,7 @@ def nivel1(surface):
     
     nave_inimigo_redimensionada = pygame.transform.scale(nave_inimiga1.imagem, (70, 70))
     surface.blit(nave_inimigo_redimensionada, nave_inimiga1.posicao)
+
     nave_inimiga1.rect = nave_inimigo_redimensionada.get_rect(topleft=nave_inimiga1.posicao) 
     nave_inimigo_redimensionada2 = pygame.transform.scale(nave_inimiga2.imagem, (70, 70))
     surface.blit(nave_inimigo_redimensionada2, nave_inimiga2.posicao)
@@ -63,6 +65,14 @@ def nivel1(surface):
     nave_inimigo_redimensionada4 = pygame.transform.scale(nave_inimiga4.imagem, (70, 70))
     surface.blit(nave_inimigo_redimensionada4, nave_inimiga4.posicao)
     nave_inimiga4.rect = nave_inimigo_redimensionada4.get_rect(topleft=nave_inimiga4.posicao) 
+# CONFLITO AQUI
+#     nave_inimigo_redimensionada2 = pygame.transform.scale(nave_inimiga2.imagem, (70, 70))
+#     surface.blit(nave_inimigo_redimensionada2, nave_inimiga2.posicao)
+#     nave_inimigo_redimensionada3 = pygame.transform.scale(nave_inimiga3.imagem, (70, 70))
+#     surface.blit(nave_inimigo_redimensionada3, nave_inimiga3.posicao)
+#     nave_inimigo_redimensionada4 = pygame.transform.scale(nave_inimiga4.imagem, (70, 70))
+#     surface.blit(nave_inimigo_redimensionada4, nave_inimiga4.posicao)
+
 
     naves_inimigas = []
     naves_inimigas.append(nave_inimiga1)

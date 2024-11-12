@@ -5,7 +5,9 @@ import niveis
 import manipularArquivos 
 import telas 
 import time
+
 from powerUp import PowerUp
+
 
 pygame.init()
 # Estados do jogo
