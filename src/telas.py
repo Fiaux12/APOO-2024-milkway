@@ -1,9 +1,24 @@
 import pygame
 import manipularArquivos 
 from naveJogador import NaveJogador
+from powerUp import PowerUp
+from usuario import Usuario
 import niveis 
 import time
 
+powerUpVel = PowerUp(
+    imagem="../assets/images/powerupVEL.png",
+    posicao=[200, 300],
+    tipo='vel',
+    valor=0.5  # Aumenta a velocidade em 0.5 unidades
+)
+powerUpTiro = PowerUp(
+    imagem="../assets/images/powerupTIRO.png",
+    posicao=[800, 300],
+    tipo='potencia_tiro',
+    valor=1  # Aumenta a potência do tiro em 1 unidade
+)
+powerUps = [powerUpVel,powerUpTiro]
 
 
 # Estados do jogo
@@ -48,52 +63,113 @@ def menu(surface, fonte):
     desenhar_texto("MILKWAY", fonte, BRANCO, (425, 100), surface)
     
     pygame.draw.rect(surface, BRANCO, botao_continuar)
-    desenhar_texto("Continuar", fonte, PRETO, (botao_continuar.x + 80, botao_continuar.y + 10),surface)
+    desenhar_texto("1. Continuar", fonte, PRETO, (botao_continuar.x + 75, botao_continuar.y + 10),surface)
     
     pygame.draw.rect(surface, BRANCO, botao_novo_jogo)
-    desenhar_texto("Novo Jogo", fonte, PRETO, (botao_novo_jogo.x + 70, botao_novo_jogo.y + 10),surface)
+    desenhar_texto("2. Novo Jogo", fonte, PRETO, (botao_novo_jogo.x + 65, botao_novo_jogo.y + 10),surface)
     
     pygame.draw.rect(surface, BRANCO, botao_melhores_jogadores)
-    desenhar_texto("Melhores Jogadores", fonte, PRETO, (botao_melhores_jogadores.x + 30, botao_melhores_jogadores.y + 10),surface)
+    desenhar_texto("3. Melhores Jogadores", fonte, PRETO, (botao_melhores_jogadores.x + 20, botao_melhores_jogadores.y + 10),surface)
 
 
 def novo_jogo(surface, nave_jogador, naves_inimigas, screen_width, screen_height):
+    teclas = pygame.key.get_pressed()
     surface.blit(background, (0, 0))
     nave_jogador.update(screen_width, screen_height, surface)
 
     for nave in naves_inimigas[:]:  
-        nave.update()  
+        nave.update(nave_jogador)  
         surface.blit(nave.imagem, nave.posicao) 
 
-def melhores_jogadores(surface, top_usuarios, fonte):
+    for powerUp in powerUps:
+        if powerUp.coletado==False:
+            powerUp.draw(surface)
+            powerUp.checar_colisao(nave_jogador)
+
+
+def melhores_jogadores(surface, top_usuarios):
     fonte_titulo = pygame.font.SysFont("arial", 30, True, False)
     fonte_texto = pygame.font.SysFont("arial", 25, True, False)
-    surface.blit(tela_melhores_jogadores, (0, 0))
 
-    desenhar_texto("Melhores Jogadores", fonte_titulo, AZUL, (45, 73),surface)
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                return MENU
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT:  
+                    return MENU
 
-    desenhar_texto("Nome", fonte_texto, AZUL, (45,290), surface)
-    desenhar_texto("Naves abatidas", fonte_texto, AZUL, (500, 290), surface)
-
-    posicao_y = 300
-    for index, usuario in top_usuarios.iterrows():
-        posicao_y += 50
-        nome = usuario["nome"]
-        pontos = usuario["pontos"]
+        surface.fill((255, 255, 255))
+        surface.blit(tela_melhores_jogadores, (0, 0))
+        pygame.draw.polygon(surface, AZUL, 
+           [(45, 600 - 40),     
+            (75, 600 - 65),      
+            (75, 600 - 15)])
         
-        texto = f".............................................................. {pontos}"
-        desenhar_texto(nome, fonte_texto, AZUL, (45, posicao_y), surface)
-        desenhar_texto(texto, fonte_texto, AZUL, (160, posicao_y), surface)
-    
-    pygame.draw.rect(surface, BRANCO, botao_voltar)
-    desenhar_texto("Voltar", fonte, AZUL, (botao_voltar.x +10, botao_voltar.y ),surface)
+        desenhar_texto("Melhores Jogadores", fonte_titulo, AZUL, (45, 73), surface)
+        desenhar_texto("Nome", fonte_texto, AZUL, (45, 290), surface)
+        desenhar_texto("Naves abatidas", fonte_texto, AZUL, (500, 290), surface)
+
+        posicao_y = 300
+        for index, usuario in top_usuarios.iterrows():
+            posicao_y += 50
+            nome = usuario["nome"]
+            pontos = usuario["pontos"]
+            texto = f".............................................................. {pontos}"
+            desenhar_texto(nome, fonte_texto, AZUL, (45, posicao_y), surface)
+            desenhar_texto(texto, fonte_texto, AZUL, (160, posicao_y), surface)
+
+        pygame.display.flip()
 
 
+def add_usuario(surface,usuarios, fonte):
+    global active, text, color
+    input_box = pygame.Rect(80, 320, 320, 35) 
+    active = True  
+    texto = '' 
+    max_nome = 10        
 
+    while active:
+       
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                return
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT:  
+                    return MENU
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN:
+                    if  texto in usuarios['nome'].values:
+                        desenhar_texto("Esse nickname já existe!!!", fonte, AZUL, (300,450), surface)
+                        pygame.display.flip() 
+                        time.sleep(2) 
+                    else:
+                        usuario = Usuario(texto)
+                        manipularArquivos.adicionar_usuario(usuario.nome, usuario.pontos, usuario.save_point)
+                        desenhar_texto("Nickname criado!!!", fonte, AZUL, (300,450), surface)
+                        active = False  
+                        pygame.display.flip()  
+                        time.sleep(2) 
+                        return MENU 
+                    active = False  
+                elif event.key == pygame.K_BACKSPACE:
+                    texto = texto[:-1]  
+                elif len(texto) < max_nome:
+                    texto += event.unicode  
 
-#TODO colocar o estado de NOVO_JOGO em uma função
-# def add_usuario(surface,usuarios, estado):
-#     pass
+        
+        
+        surface.blit(tela_criar_usuario, (0, 0))
+        pygame.draw.polygon(surface, AZUL, 
+            [(45, 600 - 40),     
+            (75, 600 - 65),      
+            (75, 600 - 15)])
+        pygame.draw.rect(surface, BRANCO, input_box, 2)
+        txt_surface = fonte.render(texto, True, BRANCO)
+        surface.blit(txt_surface, (input_box.x + 5, input_box.y + 5))
+        pygame.display.flip()
 
 def desenha_tela_inicial(surface):
     surface.blit(tela_inicial, (0, -200))
