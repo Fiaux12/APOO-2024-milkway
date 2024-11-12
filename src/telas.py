@@ -1,10 +1,11 @@
 import pygame
 import manipularArquivos 
 from naveJogador import NaveJogador
-
 from powerUp import PowerUp
+from usuario import Usuario
 import niveis 
 import time
+
 powerUpVel = PowerUp(
     imagem="../assets/images/powerupVEL.png",
     posicao=[200, 300],
@@ -18,11 +19,6 @@ powerUpTiro = PowerUp(
     valor=1  # Aumenta a potência do tiro em 1 unidade
 )
 powerUps = [powerUpVel,powerUpTiro]
-
-# import niveis 
-# import time
-
-
 
 
 # Estados do jogo
@@ -65,13 +61,13 @@ def menu(surface, fonte):
     desenhar_texto("MILKWAY", fonte, BRANCO, (425, 100), surface)
     
     pygame.draw.rect(surface, BRANCO, botao_continuar)
-    desenhar_texto("Continuar", fonte, PRETO, (botao_continuar.x + 80, botao_continuar.y + 10),surface)
+    desenhar_texto("1. Continuar", fonte, PRETO, (botao_continuar.x + 80, botao_continuar.y + 10),surface)
     
     pygame.draw.rect(surface, BRANCO, botao_novo_jogo)
-    desenhar_texto("Novo Jogo", fonte, PRETO, (botao_novo_jogo.x + 70, botao_novo_jogo.y + 10),surface)
+    desenhar_texto("2. Novo Jogo", fonte, PRETO, (botao_novo_jogo.x + 70, botao_novo_jogo.y + 10),surface)
     
     pygame.draw.rect(surface, BRANCO, botao_melhores_jogadores)
-    desenhar_texto("Melhores Jogadores", fonte, PRETO, (botao_melhores_jogadores.x + 30, botao_melhores_jogadores.y + 10),surface)
+    desenhar_texto("3. Melhores Jogadores", fonte, PRETO, (botao_melhores_jogadores.x + 30, botao_melhores_jogadores.y + 10),surface)
 
 
 def novo_jogo(surface, nave_jogador, naves_inimigas, screen_width, screen_height):
@@ -124,9 +120,44 @@ def melhores_jogadores(surface, top_usuarios):
 
         pygame.display.flip()
 
-#TODO colocar o estado de NOVO_JOGO em uma função
-# def add_usuario(surface,usuarios, estado):
-#     pass
+
+def add_usuario(surface,usuarios, fonte):
+    global active, text, color
+    input_box = pygame.Rect(80, 320, 320, 35) 
+    active = True  
+    texto = '' 
+    max_nome = 10
+
+    while active:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                return
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN:
+                    if  texto in usuarios['nome'].values:
+                        desenhar_texto("Esse nickname já existe!!!", fonte, AZUL, (300,450), surface)
+                        pygame.display.flip() 
+                        time.sleep(2) 
+                    else:
+                        usuario = Usuario(texto)
+                        manipularArquivos.adicionar_usuario(usuario.nome, usuario.pontos, usuario.save_point)
+                        desenhar_texto("Nickname criado!!!", fonte, AZUL, (300,450), surface)
+                        active = False  
+                        pygame.display.flip()  
+                        time.sleep(2) 
+                        return MENU 
+                    active = False  
+                elif event.key == pygame.K_BACKSPACE:
+                    texto = texto[:-1]  
+                elif len(texto) < max_nome:
+                    texto += event.unicode  
+
+        surface.blit(tela_criar_usuario, (0, 0))
+        pygame.draw.rect(surface, BRANCO, input_box, 2)
+        txt_surface = fonte.render(texto, True, BRANCO)
+        surface.blit(txt_surface, (input_box.x + 5, input_box.y + 5))
+        pygame.display.flip()
 
 def desenha_tela_inicial(surface):
     surface.blit(tela_inicial, (0, -200))
