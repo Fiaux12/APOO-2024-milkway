@@ -39,7 +39,7 @@ nave_jogador = NaveJogador(
     aprimoramentos={}
 )
 
-naves_inimigas = niveis.gerar_niveis(surface, 5)
+naves_inimigas = niveis.gerar_niveis(surface, 5, 100)
 
 def inicio_jogo():
     global estado

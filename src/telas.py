@@ -12,12 +12,14 @@ powerUpVel = PowerUp(
     tipo='vel',
     valor=0.5  # Aumenta a velocidade em 0.5 unidades
 )
+
 powerUpTiro = PowerUp(
     imagem="../assets/images/powerupTIRO.png",
     posicao=[800, 300],
     tipo='potencia_tiro',
     valor=1  # Aumenta a potência do tiro em 1 unidade
 )
+
 powerUps = [powerUpVel,powerUpTiro]
 
 
@@ -83,6 +85,9 @@ def novo_jogo(surface, nave_jogador, naves_inimigas, screen_width, screen_height
         if powerUp.coletado == False:
             powerUp.draw(surface)
             powerUp.checar_colisao(nave_jogador)
+
+    checar_colisao_bala_nave(nave_jogador.bullets ,naves_inimigas)
+
 
 
 def melhores_jogadores(surface, top_usuarios):
@@ -171,4 +176,17 @@ def add_usuario(surface,usuarios, fonte):
 
 def desenha_tela_inicial(surface):
     surface.blit(tela_inicial, (0, -200))
-    
+
+
+def checar_colisao_bala_nave(balas, naves_inimigas):
+    for bala in balas:
+        for nave in naves_inimigas:
+            if bala.rect.colliderect(nave.rect):
+                nave.pontos_vida -= 10  
+
+                print(nave.pontos_vida)
+                
+                balas.remove(bala)  
+                if nave.pontos_vida <= 0:
+                    naves_inimigas.remove(nave) 
+

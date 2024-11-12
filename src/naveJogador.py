@@ -18,15 +18,11 @@ class NaveJogador(NaveBase):
     def shoot(self):
         bullet = Bullet(self.posicao, 10, "../assets/images/asteroideAzul1.png", 1)
         self.bullets.append(bullet)
-        print('atirou!')
 
     def draw(self, surface):
         surface.blit(self.image, self.rect)
         for bullet in self.bullets:
             bullet.draw(surface)
-
-    def calcularAprimoramento(self):
-        raise NotImplementedError("Este método deve ser implementado")
 
     def update(self, screen_width, screen_height, surface):
         teclas = pygame.key.get_pressed()

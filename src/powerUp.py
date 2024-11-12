@@ -7,9 +7,11 @@ class PowerUp(ObjetoJogo):
     def __init__(self, imagem, posicao, tipo, valor):
         super().__init__(imagem, velocidade=0, posicao=posicao)
         self.tipo = tipo  # Tipo de aprimoramento ('vel' ou 'tiro')
-        self.valor = valor  # O valor que será adicionado ao atributo da nave
-        self.coletado = False  # Indica se o aprimoramento foi coletado
+        self.valor = valor  
+        self.coletado = False 
         self.rect = self.imagem.get_rect(topleft=posicao)
+
+
     def checar_colisao(self, nave):
         if self.rect.colliderect(nave.rect):
             self.coletado = True

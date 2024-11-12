@@ -4,7 +4,7 @@ from naveInimiga import NaveInimiga
 from powerUp import PowerUp
 import random
     
-def gerar_niveis(surface, quantidade_naves):
+def gerar_niveis(surface, quantidade_naves, pontos_vida):
     naves_inimigas = []
     for _ in range(quantidade_naves):
         x_posicao = random.randint(0, 800)  
@@ -13,7 +13,7 @@ def gerar_niveis(surface, quantidade_naves):
             imagem = "../assets/images/naveEspacial.png",
             velocidade = 0.1,
             posicao = [x_posicao, -100],  
-            pontos_vida = 100,
+            pontos_vida = pontos_vida,
             potencia_tiro = 10,
             tempo_recarga = 1.5,
             tempo_parado=pygame.time.get_ticks() + random.randint(2000, 5000)  
