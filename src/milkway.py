@@ -5,7 +5,7 @@ import niveis
 import manipularArquivos 
 import telas 
 import time
-
+from bullet import Bullet
 from powerUp import PowerUp
 
 
@@ -79,6 +79,7 @@ def inicio_jogo():
             telas.menu(surface, fonte)
         elif estado == CONTINUAR:
             telas.novo_jogo(surface,nave_jogador, naves_inimigas, screen_width, screen_height)
+
         elif estado == NOVO_JOGO:
             global active, text, color
             input_box = pygame.Rect(80, 320, 320, 35) 
@@ -90,6 +91,7 @@ def inicio_jogo():
                     if event.type == pygame.QUIT:
                         pygame.quit()
                         return
+                  
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         if input_box.collidepoint(event.pos):
                             active = not active

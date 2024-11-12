@@ -76,8 +76,10 @@ def menu(surface, fonte):
 
 def novo_jogo(surface, nave_jogador, naves_inimigas, screen_width, screen_height):
     
-    
+    teclas = pygame.key.get_pressed()
+
     surface.blit(background, (0, 0))
+ 
     nave_jogador.update(screen_width, screen_height, surface)
 
     for nave in naves_inimigas[:]:  
