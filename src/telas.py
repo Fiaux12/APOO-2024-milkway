@@ -72,9 +72,11 @@ def menu(surface, fonte):
     desenhar_texto("3. Melhores Jogadores", fonte, PRETO, (botao_melhores_jogadores.x + 20, botao_melhores_jogadores.y + 10),surface)
 
 
-def novo_jogo(surface, nave_jogador, naves_inimigas, screen_width, screen_height):
+def novo_jogo(surface, nave_jogador, naves_inimigas, screen_width, screen_height, fonte, score):
     teclas = pygame.key.get_pressed()
+
     surface.blit(background, (0, 0))
+    desenhar_texto(f"SCORE: {score}", fonte, BRANCO, (30, 30), surface)
     nave_jogador.update(screen_width, screen_height, surface)
 
     for nave in naves_inimigas[:]:  
@@ -86,7 +88,10 @@ def novo_jogo(surface, nave_jogador, naves_inimigas, screen_width, screen_height
             powerUp.draw(surface)
             powerUp.checar_colisao(nave_jogador)
 
-    checar_colisao_bala_nave(nave_jogador.bullets ,naves_inimigas)
+    score = checar_colisao_bala_nave(nave_jogador.bullets ,naves_inimigas,score)
+    pygame.display.flip()
+    return score
+
 
 
 
@@ -178,7 +183,7 @@ def desenha_tela_inicial(surface):
     surface.blit(tela_inicial, (0, -200))
 
 
-def checar_colisao_bala_nave(balas, naves_inimigas):
+def checar_colisao_bala_nave(balas, naves_inimigas, score):
     balas_para_remover = []
     naves_para_remover = []
 
@@ -193,6 +198,7 @@ def checar_colisao_bala_nave(balas, naves_inimigas):
 
                 if nave.pontos_vida <= 0 and nave not in naves_para_remover:
                     naves_para_remover.append(nave)
+                    score += 10
 
                 break  
 
@@ -201,3 +207,5 @@ def checar_colisao_bala_nave(balas, naves_inimigas):
 
     for nave in naves_para_remover:
         naves_inimigas.remove(nave)
+
+    return score

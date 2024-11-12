@@ -48,6 +48,7 @@ def inicio_jogo():
     usuarios = manipularArquivos.carregar_usuarios()
     top_usuarios = usuarios.nlargest(3, 'pontos')
 
+    score = 0
     run = True
     while run:
         if estado == TELA_INICIAL:
@@ -73,7 +74,7 @@ def inicio_jogo():
         if estado == MENU:
             telas.menu(surface, fonte)
         elif estado == CONTINUAR:
-            telas.novo_jogo(surface,nave_jogador, naves_inimigas, screen_width, screen_height)
+            score = telas.novo_jogo(surface,nave_jogador, naves_inimigas, screen_width, screen_height, fonte, score)
 
         elif estado == NOVO_JOGO:
             estado = telas.add_usuario(surface, usuarios, fonte)
