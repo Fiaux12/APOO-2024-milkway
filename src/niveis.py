@@ -16,7 +16,7 @@ def gerar_niveis(surface, quantidade_naves, pontos_vida):
             pontos_vida = pontos_vida,
             potencia_tiro = 10,
             tempo_recarga = 1.5,
-            tempo_parado=pygame.time.get_ticks() + random.randint(2000, 5000)  
+            tempo_parado=pygame.time.get_ticks() + random.randint(2000, 9000)  
         )
         naves_inimigas.append(nave_inimiga)
     

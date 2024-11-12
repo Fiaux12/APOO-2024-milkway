@@ -10,9 +10,11 @@ class NaveInimiga(NaveBase):
         self.rect = self.imagem.get_rect(topleft=posicao)
 
 
-    def checar_colisao(self, nave):
-        if self.rect.colliderect(nave.rect):
-            print("Bateu na nave inimiga!")
+    def checar_colisao(self, nave_jogador):
+        if self.rect.colliderect(nave_jogador.rect):
+            nave_jogador.pontos_vida -= 10 
+            print(nave_jogador.pontos_vida)
+            return "game_over"
 
 
     def atirar():
@@ -27,7 +29,7 @@ class NaveInimiga(NaveBase):
         self.imagem = pygame.transform.rotate(self.imagem, 180)
 
 
-    def update(self,nave):
+    def update(self,nave_jogador):
         tempo_atual = pygame.time.get_ticks()
 
         # Verifica se já passou o tempo de parada
@@ -39,7 +41,7 @@ class NaveInimiga(NaveBase):
             self.posicao[1] += self.velocidade  # Movimenta para baixo conforme a velocidade
             self.rect.topleft=self.posicao      #Atualiza a colisão da nave de acordo com a posição
        
-        self.checar_colisao(nave)
+        self.checar_colisao(nave_jogador)
 
 
         # # Verifica se a nave saiu da tela e retorna um sinal para removê-la
