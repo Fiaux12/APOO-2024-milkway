@@ -6,6 +6,8 @@ import manipularArquivos
 import telas 
 import time
 from bullet import Bullet
+from powerUp import PowerUp
+
 
 pygame.init()
 # Estados do jogo
