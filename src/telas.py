@@ -39,6 +39,7 @@ tela_inicial = pygame.image.load("../assets/images/NovoLogo.jpg")
 tela_melhores_jogadores = pygame.image.load("../assets/images/melhoresJogadores.png")
 tela_criar_usuario = pygame.image.load("../assets/images/criarUsuario.png")
 tela_menu = pygame.image.load("../assets/images/menu.png")
+tela_game_over = pygame.image.load("../assets/images/game_over.png")
 
 
 #Cores
@@ -50,6 +51,7 @@ AZUL = (0 , 0, 129)
 botao_continuar = pygame.Rect(350, 200, 250, 50)
 botao_novo_jogo = pygame.Rect(350, 300, 250, 50)
 botao_melhores_jogadores = pygame.Rect(350, 400, 250, 50)
+botao_voltar = pygame.Rect(20, 540, 80, 30)
 
 
 def desenhar_texto(texto, fonte, cor, pos, surface):
@@ -209,3 +211,9 @@ def checar_colisao_bala_nave(balas, naves_inimigas, score):
         naves_inimigas.remove(nave)
 
     return score
+    
+
+def desenha_tela_game_over(surface):
+    surface.blit(tela_game_over, (0, 0))
+    
+    
