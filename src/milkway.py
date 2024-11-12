@@ -84,6 +84,7 @@ def inicio_jogo():
             input_box = pygame.Rect(80, 320, 320, 35) 
             active = True  
             texto = '' 
+            max_nome = 10
 
             while active:
                 for event in pygame.event.get():
@@ -112,7 +113,7 @@ def inicio_jogo():
                             active = False  
                         elif event.key == pygame.K_BACKSPACE:
                             texto = texto[:-1]  
-                        else:
+                        elif len(texto) < max_nome:
                             texto += event.unicode  
 
                 surface.blit(telas.tela_criar_usuario, (0, 0))
