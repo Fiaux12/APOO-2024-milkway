@@ -76,7 +76,6 @@ def menu(surface, fonte):
 
 def novo_jogo(surface, nave_jogador, naves_inimigas, screen_width, screen_height):
     
-    
     surface.blit(background, (0, 0))
     nave_jogador.update(screen_width, screen_height, surface)
 
@@ -89,25 +88,41 @@ def novo_jogo(surface, nave_jogador, naves_inimigas, screen_width, screen_height
             powerUp.draw(surface)
             powerUp.checar_colisao(nave_jogador)
 
+
 def melhores_jogadores(surface, top_usuarios):
     fonte_titulo = pygame.font.SysFont("arial", 30, True, False)
     fonte_texto = pygame.font.SysFont("arial", 25, True, False)
-    surface.blit(tela_melhores_jogadores, (0, 0))
 
-    desenhar_texto("Melhores Jogadores", fonte_titulo, AZUL, (45, 73),surface)
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                return MENU
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT:  
+                    return MENU
 
-    desenhar_texto("Nome", fonte_texto, AZUL, (45,290), surface)
-    desenhar_texto("Naves abatidas", fonte_texto, AZUL, (500, 290), surface)
-
-    posicao_y = 300
-    for index, usuario in top_usuarios.iterrows():
-        posicao_y += 50
-        nome = usuario["nome"]
-        pontos = usuario["pontos"]
+        surface.fill((255, 255, 255))
+        surface.blit(tela_melhores_jogadores, (0, 0))
+        pygame.draw.polygon(surface, AZUL, 
+           [(45, 600 - 40),     
+            (75, 600 - 65),      
+            (75, 600 - 15)])
         
-        texto = f".............................................................. {pontos}"
-        desenhar_texto(nome, fonte_texto, AZUL, (45, posicao_y), surface)
-        desenhar_texto(texto, fonte_texto, AZUL, (160, posicao_y), surface)
+        desenhar_texto("Melhores Jogadores", fonte_titulo, AZUL, (45, 73), surface)
+        desenhar_texto("Nome", fonte_texto, AZUL, (45, 290), surface)
+        desenhar_texto("Naves abatidas", fonte_texto, AZUL, (500, 290), surface)
+
+        posicao_y = 300
+        for index, usuario in top_usuarios.iterrows():
+            posicao_y += 50
+            nome = usuario["nome"]
+            pontos = usuario["pontos"]
+            texto = f".............................................................. {pontos}"
+            desenhar_texto(nome, fonte_texto, AZUL, (45, posicao_y), surface)
+            desenhar_texto(texto, fonte_texto, AZUL, (160, posicao_y), surface)
+
+        pygame.display.flip()
 
 #TODO colocar o estado de NOVO_JOGO em uma função
 # def add_usuario(surface,usuarios, estado):
@@ -115,6 +130,4 @@ def melhores_jogadores(surface, top_usuarios):
 
 def desenha_tela_inicial(surface):
     surface.blit(tela_inicial, (0, -200))
-    
-
     
