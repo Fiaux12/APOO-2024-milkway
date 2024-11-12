@@ -6,24 +6,25 @@ class NaveInimiga(NaveBase):
         super().__init__(imagem, velocidade, posicao, pontos_vida, potencia_tiro, tempo_recarga)
         self.tempo_parado = tempo_parado  
         self.tempo_parado_decorrido = 0  
-
         self.movendo = False
         self.rect = self.imagem.get_rect(topleft=posicao)
+
+
     def checar_colisao(self, nave):
         if self.rect.colliderect(nave.rect):
             print("Bateu na nave inimiga!")
 
 
-
     def atirar():
         raise NotImplementedError("Este método deve ser implementado")
+
 
     def destrutor():
         raise NotImplementedError("Este método deve ser implementado")
 
+
     def retacionarImagem(self):
         self.imagem = pygame.transform.rotate(self.imagem, 180)
-
 
 
     def update(self,nave):
@@ -36,8 +37,8 @@ class NaveInimiga(NaveBase):
         # Movimenta a nave para baixo se a flag estiver ativada
         if self.movendo:
             self.posicao[1] += self.velocidade  # Movimenta para baixo conforme a velocidade
-
             self.rect.topleft=self.posicao      #Atualiza a colisão da nave de acordo com a posição
+       
         self.checar_colisao(nave)
 
 

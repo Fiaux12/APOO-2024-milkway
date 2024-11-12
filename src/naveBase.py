@@ -13,4 +13,7 @@ class NaveBase(ObjetoJogo):
 
     def obterPotencia():
         raise NotImplementedError("Este método deve ser implementado")
+    
+    def update():
+        pass
 

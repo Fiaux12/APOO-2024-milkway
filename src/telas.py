@@ -80,7 +80,7 @@ def novo_jogo(surface, nave_jogador, naves_inimigas, screen_width, screen_height
         surface.blit(nave.imagem, nave.posicao) 
 
     for powerUp in powerUps:
-        if powerUp.coletado==False:
+        if powerUp.coletado == False:
             powerUp.draw(surface)
             powerUp.checar_colisao(nave_jogador)
 
