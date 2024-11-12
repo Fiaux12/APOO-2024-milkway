@@ -5,7 +5,7 @@ import niveis
 import manipularArquivos 
 import telas 
 import time
-
+from bullet import Bullet
 from powerUp import PowerUp
 
 
@@ -74,6 +74,7 @@ def inicio_jogo():
             telas.menu(surface, fonte)
         elif estado == CONTINUAR:
             telas.novo_jogo(surface,nave_jogador, naves_inimigas, screen_width, screen_height)
+
         elif estado == NOVO_JOGO:
             estado = telas.add_usuario(surface, usuarios, fonte)
 
