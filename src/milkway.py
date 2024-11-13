@@ -18,6 +18,7 @@ NOVO_JOGO = "novo_jogo"
 CONTINUAR = "continuar"
 MELHORES_JOGADORES = "melhores_jogadores"
 GAME_OVER = "game_over"
+WINNER = "winner"
 estado = TELA_INICIAL
 settings = manipularArquivos.ler_configuracoes()
 
@@ -40,12 +41,14 @@ nave_jogador = NaveJogador(
     aprimoramentos={}
 )
 
-naves_inimigas = niveis.gerar_niveis(surface, 20, 30)
+naves_inimigas = niveis.gerar_niveis(surface, int(settings["QtdInimigos"]["valor"]) , 30)
+
 
 def inicio_jogo():
     global estado
     tempo_inicial = pygame.time.get_ticks() 
-
+    tempo_game_over = None
+    tempo_winner = None
     usuarios = manipularArquivos.carregar_usuarios()
     top_usuarios = usuarios.nlargest(3, 'pontos')
 
@@ -64,27 +67,49 @@ def inicio_jogo():
                 elif event.type == pygame.KEYDOWN:
                     if estado == MENU:
                         if event.key == pygame.K_1:    
-                            estado = CONTINUAR
-                        elif event.key == pygame.K_2: 
                             estado = NOVO_JOGO  
-                        elif event.key == pygame.K_3:  
+                        elif event.key == pygame.K_2: 
                             estado = MELHORES_JOGADORES
                     elif event.key == pygame.K_ESCAPE:
                         estado = MENU
                 
         if estado == MENU:
             telas.menu(surface, fonte)
+
         elif estado == CONTINUAR:
-            score = telas.novo_jogo(surface,nave_jogador, naves_inimigas, screen_width, screen_height, fonte, score)
+            valor = telas.novo_jogo(surface,nave_jogador, naves_inimigas, screen_width, screen_height, fonte, score)
+            if valor == GAME_OVER:
+                estado = GAME_OVER
+                tempo_game_over = pygame.time.get_ticks()
+            else: 
+                score = valor
+                if score == int(settings["QtdInimigos"]["valor"]) * 10:
+                    estado = WINNER
+
 
         elif estado == NOVO_JOGO:
             estado = telas.add_usuario(surface, usuarios, fonte)
+            
 
         elif estado == MELHORES_JOGADORES:
             estado = telas.melhores_jogadores(surface, top_usuarios)
             
         elif estado == GAME_OVER:
-            telas.desenha_tela_game_over(surface)
+            if tempo_game_over is not None:
+                tempo_decorrido = pygame.time.get_ticks() - tempo_game_over
+                if tempo_decorrido <= 5000:  
+                    telas.desenha_tela_game_over(surface)
+                else:
+                    estado = MENU  
+
+        elif estado == WINNER:
+             if tempo_winner is not None:
+                tempo_decorrido = pygame.time.get_ticks() - tempo_winner
+                if tempo_decorrido <= 5000:  
+                    telas.desenha_tela_ganhador(surface)
+                else:
+                    estado = MENU  
+        
 
         pygame.display.flip()
 

@@ -8,6 +8,9 @@
         "pontos_vida" : 100,
         "potencia_tiro" : 100,
         "tempo_recarga" : 100        
+    },
+    "QtdInimigos": {
+        "valor" : 2
     }
 
       

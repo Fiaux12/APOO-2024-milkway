@@ -14,16 +14,9 @@ class NaveInimiga(NaveBase):
         if self.rect.colliderect(nave_jogador.rect):
             nave_jogador.pontos_vida -= 10 
             print(nave_jogador.pontos_vida)
-            return "game_over"
-
-
-    def atirar():
-        raise NotImplementedError("Este método deve ser implementado")
-
-
-    def destrutor():
-        raise NotImplementedError("Este método deve ser implementado")
-
+            return True
+        
+        return False
 
     def retacionarImagem(self):
         self.imagem = pygame.transform.rotate(self.imagem, 180)
@@ -41,7 +34,7 @@ class NaveInimiga(NaveBase):
             self.posicao[1] += self.velocidade  # Movimenta para baixo conforme a velocidade
             self.rect.topleft=self.posicao      #Atualiza a colisão da nave de acordo com a posição
        
-        self.checar_colisao(nave_jogador)
+        return self.checar_colisao(nave_jogador)
 
 
         # # Verifica se a nave saiu da tela e retorna um sinal para removê-la

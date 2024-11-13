@@ -26,8 +26,9 @@ powerUps = [powerUpVel,powerUpTiro]
 # Estados do jogo
 TELA_INICIAL = "tela_inicial"
 MENU = "menu"
-JOGO = "jogo"
+CONTINUAR = "continuar"
 MELHORES_JOGADORES = "melhores_jogadores"
+GAME_OVER = "game_over"
 estado = TELA_INICIAL
 
 #configurações do jogo
@@ -64,14 +65,14 @@ def menu(surface, fonte):
     
     desenhar_texto("MILKWAY", fonte, BRANCO, (425, 100), surface)
     
-    pygame.draw.rect(surface, BRANCO, botao_continuar)
-    desenhar_texto("1. Continuar", fonte, PRETO, (botao_continuar.x + 75, botao_continuar.y + 10),surface)
+    # pygame.draw.rect(surface, BRANCO, botao_continuar)
+    # desenhar_texto("1. Continuar", fonte, PRETO, (botao_continuar.x + 75, botao_continuar.y + 10),surface)
     
     pygame.draw.rect(surface, BRANCO, botao_novo_jogo)
-    desenhar_texto("2. Novo Jogo", fonte, PRETO, (botao_novo_jogo.x + 65, botao_novo_jogo.y + 10),surface)
+    desenhar_texto("1. Novo Jogo", fonte, PRETO, (botao_novo_jogo.x + 65, botao_novo_jogo.y + 10),surface)
     
     pygame.draw.rect(surface, BRANCO, botao_melhores_jogadores)
-    desenhar_texto("3. Melhores Jogadores", fonte, PRETO, (botao_melhores_jogadores.x + 20, botao_melhores_jogadores.y + 10),surface)
+    desenhar_texto("2. Melhores Jogadores", fonte, PRETO, (botao_melhores_jogadores.x + 20, botao_melhores_jogadores.y + 10),surface)
 
 
 def novo_jogo(surface, nave_jogador, naves_inimigas, screen_width, screen_height, fonte, score):
@@ -82,8 +83,10 @@ def novo_jogo(surface, nave_jogador, naves_inimigas, screen_width, screen_height
     nave_jogador.update(screen_width, screen_height, surface)
 
     for nave in naves_inimigas[:]:  
-        nave.update(nave_jogador)  
+        colisao = nave.update(nave_jogador)  
         surface.blit(nave.imagem, nave.posicao) 
+        if colisao:
+            return GAME_OVER
 
     for powerUp in powerUps:
         if powerUp.coletado == False:
@@ -162,7 +165,7 @@ def add_usuario(surface,usuarios, fonte):
                         active = False  
                         pygame.display.flip()  
                         time.sleep(2) 
-                        return MENU 
+                        return CONTINUAR
                     active = False  
                 elif event.key == pygame.K_BACKSPACE:
                     texto = texto[:-1]  
@@ -215,5 +218,10 @@ def checar_colisao_bala_nave(balas, naves_inimigas, score):
 
 def desenha_tela_game_over(surface):
     surface.blit(tela_game_over, (0, 0))
+    
+def desenha_tela_ganhador(surface):
+    surface.blit(tela_melhores_jogadores, (0, 0))
+    pygame.display.flip()
+
     
     
