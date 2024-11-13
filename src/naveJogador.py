@@ -13,7 +13,6 @@ class NaveJogador(NaveBase):
         self.bullets = []
         self.space_pressed = False
         self.rect = self.imagem.get_rect(topleft=posicao)
-        #self.rect.inflate_ip(-10, -10)
 
     def shoot(self):
         bullet = Bullet(self.posicao, 10, "../assets/images/asteroideAzul1.png", 1)

@@ -10,14 +10,14 @@ powerUpVel = PowerUp(
     imagem="../assets/images/powerupVEL.png",
     posicao=[200, 300],
     tipo='vel',
-    valor=0.5  # Aumenta a velocidade em 0.5 unidades
+    valor=0.5  
 )
 
 powerUpTiro = PowerUp(
     imagem="../assets/images/powerupTIRO.png",
     posicao=[800, 300],
-    tipo='potencia_tiro',
-    valor=1  # Aumenta a potência do tiro em 1 unidade
+    tipo='tiro',
+    valor=10 
 )
 
 powerUps = [powerUpVel,powerUpTiro]
@@ -148,7 +148,7 @@ def add_usuario(surface,usuarios, fonte):
                 return
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:  
-                    return MENU
+                    return MENU, None
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
                     if  texto in usuarios['nome'].values:
@@ -163,7 +163,6 @@ def add_usuario(surface,usuarios, fonte):
                         pygame.display.flip()  
                         time.sleep(2) 
                         return CONTINUAR, usuario
-                    active = False  
                 elif event.key == pygame.K_BACKSPACE:
                     texto = texto[:-1]  
                 elif len(texto) < max_nome:

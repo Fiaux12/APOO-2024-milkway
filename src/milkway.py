@@ -43,6 +43,11 @@ nave_jogador = NaveJogador(
 
 qtd_inimigas = int(settings["QtdInimigos"]["valor"]) 
 
+def reinicia_jogo():
+    naves_inimigas = niveis.gerar_niveis(surface, qtd_inimigas, 30)
+    score = 0
+    nave_jogador.bullets = []
+
 
 def inicio_jogo():
     global estado
@@ -85,9 +90,8 @@ def inicio_jogo():
             if valor == GAME_OVER:
                 usuario_atual.pontos = score
                 usuario_atual.atualizar()
-                score = 0
-                naves_inimigas = niveis.gerar_niveis(surface, qtd_inimigas, 30)
                 tempo_game_over = pygame.time.get_ticks()
+                reinicia_jogo()
                 estado = GAME_OVER
 
             else: 
@@ -95,11 +99,10 @@ def inicio_jogo():
                 usuario_atual.pontos = valor
                 usuario_atual.atualizar()
 
-                ganhar = qtd_inimigas * 10
-                if score == ganhar:
-                    naves_inimigas = niveis.gerar_niveis(surface, qtd_inimigas, 30)
+                pontos = qtd_inimigas * 10
+                if score == pontos:
+                    reinicia_jogo()
                     tempo_winner = pygame.time.get_ticks()
-                    score = 0
                     estado = WINNER
 
 
