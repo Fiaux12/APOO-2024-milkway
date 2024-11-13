@@ -15,4 +15,7 @@ class Bullet(ObjetoJogo):
         self.rect.y -= self.speed
 
     def draw(self, surface):
-        surface.blit(self.imagem, self.rect)
+        bala_redimensionada = pygame.transform.scale(self.imagem, (30, 80))
+        self.rect = bala_redimensionada.get_rect(center=self.rect.center)
+        surface.blit(bala_redimensionada, self.rect)
+        

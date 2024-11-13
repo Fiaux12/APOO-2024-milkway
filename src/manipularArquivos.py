@@ -40,4 +40,11 @@ def adicionar_usuario(nome, pontos, save_point):
     df = pd.concat([df, novo_usuario], ignore_index=True)
     salvar_usuarios(df)
 
+# Função para atualizar os pontos 
+def atualizar_pontos(nome_usuario, novos_pontos):
+    df = carregar_usuarios()
+    if nome_usuario.nome in df["nome"].values:
+        df.loc[df["nome"] == nome_usuario.nome , "pontos"] = novos_pontos
+
+    salvar_usuarios(df)
 

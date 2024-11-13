@@ -4,11 +4,28 @@
         "screen_height" : 600
     },
     "NaveJogador": {
-        "velocidade" : 0.5,
+        "velocidade" : 1,
         "pontos_vida" : 100,
-        "potencia_tiro" : 100,
-        "tempo_recarga" : 100        
+        "potencia_tiro" : 10,
+        "posicao_inicial" : [350, 400]
+        
+    },
+    "NaveInimigo": {
+        "velocidade" : 0.7,
+        "posicao_inicial_y" : -100,
+        "quantidade" : 30,
+        "tempo_geracao": 100000,
+        "pontos_vida" : 30
+    },
+    "Tempos": {
+        "tela_inicial" : 1000,
+        "tempo_tela_game_over" : 5000,
+        "tempo_tela_ganhador" : 5000
+    },
+    "Geral":{
+        "powerUp_velocidade" : "vel",
+        "powerUp_potencia_tiro" : "tiro"
     }
-
+    
       
 }
