@@ -50,13 +50,13 @@ def inicio_jogo():
     tempo_inicial = pygame.time.get_ticks() 
     tempo_game_over = None
     tempo_winner = None
-    usuarios = manipularArquivos.carregar_usuarios()
-    top_usuarios = usuarios.nlargest(3, 'pontos')
     naves_inimigas = niveis.gerar_niveis(surface, qtd_inimigas, 30)
-
+    usuarios = manipularArquivos.carregar_usuarios()
+    usuario_atual = None
     score = 0
     run = True
     while run:
+
         if estado == TELA_INICIAL:
             if pygame.time.get_ticks() - tempo_inicial <= 1000:
                 telas.desenha_tela_inicial(surface)
@@ -83,6 +83,8 @@ def inicio_jogo():
             valor = None
             valor = telas.novo_jogo(surface,nave_jogador, naves_inimigas, screen_width, screen_height, fonte, score)
             if valor == GAME_OVER:
+                usuario_atual.pontos = score
+                usuario_atual.atualizar()
                 score = 0
                 naves_inimigas = niveis.gerar_niveis(surface, qtd_inimigas, 30)
                 tempo_game_over = pygame.time.get_ticks()
@@ -90,6 +92,9 @@ def inicio_jogo():
 
             else: 
                 score = valor
+                usuario_atual.pontos = valor
+                usuario_atual.atualizar()
+
                 ganhar = qtd_inimigas * 10
                 if score == ganhar:
                     naves_inimigas = niveis.gerar_niveis(surface, qtd_inimigas, 30)
@@ -99,9 +104,11 @@ def inicio_jogo():
 
 
         elif estado == NOVO_JOGO:
-            estado = telas.add_usuario(surface, usuarios, fonte)
+            estado, usuario_atual = telas.add_usuario(surface, usuarios, fonte)
 
         elif estado == MELHORES_JOGADORES:
+            usuarios = manipularArquivos.carregar_usuarios()
+            top_usuarios = usuarios.nlargest(3, 'pontos')
             estado = telas.melhores_jogadores(surface, top_usuarios)
 
         elif estado == GAME_OVER:

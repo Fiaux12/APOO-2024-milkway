@@ -63,7 +63,7 @@ def desenhar_texto(texto, fonte, cor, pos, surface):
 def menu(surface, fonte):
     surface.blit(tela_menu, (0, 0))
     fonte_titulo = pygame.font.SysFont("arial", 50, True, False)
-    desenhar_texto("MILKWAY", fonte_titulo, BRANCO, (425, 100), surface)
+    desenhar_texto("MILKWAY", fonte_titulo, BRANCO, (360, 210), surface)
     
     pygame.draw.rect(surface, BRANCO, botao_novo_jogo)
     desenhar_texto("1. Novo Jogo", fonte, PRETO, (botao_novo_jogo.x + 65, botao_novo_jogo.y + 10),surface)
@@ -162,7 +162,7 @@ def add_usuario(surface,usuarios, fonte):
                         active = False  
                         pygame.display.flip()  
                         time.sleep(2) 
-                        return CONTINUAR
+                        return CONTINUAR, usuario
                     active = False  
                 elif event.key == pygame.K_BACKSPACE:
                     texto = texto[:-1]  
