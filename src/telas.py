@@ -1,10 +1,9 @@
 import pygame
 import manipularArquivos 
-from naveJogador import NaveJogador
 from powerUp import PowerUp
 from usuario import Usuario
-import niveis 
 import time
+import settings 
 
 powerUpVel = PowerUp(
     imagem="../assets/images/powerupVEL.png",
@@ -22,14 +21,21 @@ powerUpTiro = PowerUp(
 
 powerUps = [powerUpVel,powerUpTiro]
 
-
 # Estados do jogo
 TELA_INICIAL = "tela_inicial"
 MENU = "menu"
+NOVO_JOGO = "novo_jogo"
 CONTINUAR = "continuar"
 MELHORES_JOGADORES = "melhores_jogadores"
 GAME_OVER = "game_over"
-estado = TELA_INICIAL
+WINNER = "winner"
+
+#Cores
+BRANCO = (255, 255, 255)
+PRETO = (0, 0, 0)
+AZUL = (0 , 0, 129)
+
+#Fonte
 
 #configurações do jogo
 settings = manipularArquivos.ler_configuracoes()
@@ -43,10 +49,6 @@ tela_menu = pygame.image.load("../assets/images/menu.png")
 tela_game_over = pygame.image.load("../assets/images/game_over.png")
 
 
-#Cores
-BRANCO = (255, 255, 255)
-PRETO = (0, 0, 0)
-AZUL = (0 , 0, 129)
 
 # Retângulos para os botões
 botao_continuar = pygame.Rect(350, 200, 250, 50)
@@ -72,12 +74,12 @@ def menu(surface, fonte):
     desenhar_texto("2. Melhores Jogadores", fonte, PRETO, (botao_melhores_jogadores.x + 20, botao_melhores_jogadores.y + 10),surface)
 
 
-def novo_jogo(surface, nave_jogador, naves_inimigas, screen_width, screen_height, fonte, score):
+def novo_jogo(surface, nave_jogador, naves_inimigas, score, fonte):
     teclas = pygame.key.get_pressed()
 
     surface.blit(background, (0, 0))
     desenhar_texto(f"SCORE: {score}", fonte, BRANCO, (30, 30), surface)
-    nave_jogador.update(screen_width, screen_height, surface)
+    nave_jogador.update(surface)
     
     for nave_inimiga in naves_inimigas[:]: 
         nave_inimiga.update(nave_jogador)  
@@ -92,7 +94,7 @@ def novo_jogo(surface, nave_jogador, naves_inimigas, screen_width, screen_height
             powerUp.draw(surface)
             powerUp.checar_colisao(nave_jogador)
 
-    score = checar_colisao_bala_nave(nave_jogador.bullets ,naves_inimigas,score)
+    score = checar_colisao_bala_nave(nave_jogador.bullets, nave_jogador.potencia_tiro, naves_inimigas,score)
     pygame.display.flip()
     return score
 
@@ -133,12 +135,12 @@ def melhores_jogadores(surface, top_usuarios):
         pygame.display.flip()
 
 
-def add_usuario(surface,usuarios, fonte):
+def add_usuario(surface,usuarios,fonte):
     global active, text, color
     input_box = pygame.Rect(80, 320, 320, 35) 
     active = True  
     texto = '' 
-    max_nome = 10        
+    tamanho_max_nome = 10
 
     while active:
        
@@ -165,7 +167,7 @@ def add_usuario(surface,usuarios, fonte):
                         return CONTINUAR, usuario
                 elif event.key == pygame.K_BACKSPACE:
                     texto = texto[:-1]  
-                elif len(texto) < max_nome:
+                elif len(texto) < tamanho_max_nome:
                     texto += event.unicode  
 
         
@@ -184,14 +186,15 @@ def desenha_tela_inicial(surface):
     surface.blit(tela_inicial, (0, -200))
 
 
-def checar_colisao_bala_nave(balas, naves_inimigas, score):
+def checar_colisao_bala_nave(balas, potencia_tiro, naves_inimigas, score):
     balas_para_remover = []
     naves_para_remover = []
 
     for bala in balas:
         for nave in naves_inimigas:
             if bala.rect.colliderect(nave.rect):
-                nave.pontos_vida -= 10 
+                nave.pontos_vida -= potencia_tiro 
+                print(potencia_tiro)
 
                 if bala not in balas_para_remover:
                     balas_para_remover.append(bala)

@@ -1,30 +1,27 @@
-import pandas as pd
 import pygame
 from naveInimiga import NaveInimiga
-from powerUp import PowerUp
+import settings 
 import random
     
-def gerar_niveis(surface, quantidade_naves, pontos_vida):
+#Gera uma nova lista de naves em posições aleatorias 
+def gerar_niveis(surface):
     naves_inimigas = []
-    for _ in range(quantidade_naves):
+    for _ in range(settings.qtd_inimigas):
         x_posicao = random.randint(0, 800)  
 
         nave_inimiga = NaveInimiga(
             imagem = "../assets/images/naveEspacial.png",
-            velocidade = 0.3,
-            posicao = [x_posicao, -100],  
-            pontos_vida = pontos_vida,
-            potencia_tiro = 10,
-            tempo_recarga = 1.5,
-            tempo_parado=pygame.time.get_ticks() + random.randint(50, 100000)  #100000
+            velocidade = settings.velocidade_inimigo,
+            posicao = [x_posicao, settings.posicao_inicial_y],  
+            pontos_vida = settings.pontos_vida_inimigo,
+            tempo_parado=pygame.time.get_ticks() + random.randint(50, settings.tempo_geracao)  
         )
         naves_inimigas.append(nave_inimiga)
     
-    # Desenha as naves na tela
     for nave in naves_inimigas:
         nave.retacionarImagem() 
         nave_imagem_redimensionada = pygame.transform.scale(nave.imagem, (70, 70))
         surface.blit(nave_imagem_redimensionada, nave.posicao)
-        nave.rect = nave_imagem_redimensionada.get_rect(topleft=nave.posicao)  # Atualiza a colisão
+        nave.rect = nave_imagem_redimensionada.get_rect(topleft=nave.posicao) 
 
     return naves_inimigas
