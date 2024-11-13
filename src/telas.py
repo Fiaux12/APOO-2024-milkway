@@ -194,7 +194,6 @@ def checar_colisao_bala_nave(balas, potencia_tiro, naves_inimigas, score):
         for nave in naves_inimigas:
             if bala.rect.colliderect(nave.rect):
                 nave.pontos_vida -= potencia_tiro 
-                print(potencia_tiro)
 
                 if bala not in balas_para_remover:
                     balas_para_remover.append(bala)
