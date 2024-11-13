@@ -3,23 +3,24 @@ import manipularArquivos
 from powerUp import PowerUp
 from usuario import Usuario
 import time
-import settings 
+import settings
+import random 
 
-powerUpVel = PowerUp(
-    imagem="../assets/images/powerupVEL.png",
-    posicao=[200, 300],
-    tipo='vel',
-    valor=0.5  
-)
+#powerUpVel = PowerUp(
+#    imagem="../assets/images/powerupVEL.png",
+#    posicao=[200, 300],
+#    tipo='vel',
+#    valor=0.5  
+#)
 
-powerUpTiro = PowerUp(
-    imagem="../assets/images/powerupTIRO.png",
-    posicao=[800, 300],
-    tipo='tiro',
-    valor=10 
-)
+#powerUpTiro = PowerUp(
+#    imagem="../assets/images/powerupTIRO.png",
+#    posicao=[800, 300],
+#    tipo='tiro',
+#    valor=10 
+#)
 
-powerUps = [powerUpVel,powerUpTiro]
+powerUps = []
 
 # Estados do jogo
 TELA_INICIAL = "tela_inicial"
@@ -202,6 +203,25 @@ def checar_colisao_bala_nave(balas, potencia_tiro, naves_inimigas, score):
                 if nave.pontos_vida <= 0 and nave not in naves_para_remover:
                     naves_para_remover.append(nave)
                     score += 10
+                    chance = random.randint(1, 100)
+                    if chance <= 20:  # 20% de chance de aparecer um power-up
+                        tipo_power_up = random.choice(['vel', 'tiro'])  # Escolhe entre velocidade ou tiro
+                        if tipo_power_up == 'vel':
+                            novo_power_up = PowerUp(
+                                imagem="../assets/images/powerupVEL.png",
+                                posicao=nave.posicao,  # Usa a posição da nave destruída
+                                tipo='vel',
+                                valor=0.5 #em quanto incrementa a velocidade
+                            )
+                        else:
+                            novo_power_up = PowerUp(
+                                imagem="../assets/images/powerupTIRO.png",
+                                posicao=nave.posicao,  # Usa a posição da nave destruída
+                                tipo='tiro',
+                                valor=10 #em quanto incrementa o tiro
+                            )
+                        powerUps.append(novo_power_up)  # Adiciona o power-up à lista
+
 
                 break  
 
