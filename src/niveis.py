@@ -11,7 +11,7 @@ def gerar_niveis(surface, quantidade_naves, pontos_vida):
 
         nave_inimiga = NaveInimiga(
             imagem = "../assets/images/naveEspacial.png",
-            velocidade = 0.5,
+            velocidade = 0.3,
             posicao = [x_posicao, -100],  
             pontos_vida = pontos_vida,
             potencia_tiro = 10,

@@ -62,11 +62,8 @@ def desenhar_texto(texto, fonte, cor, pos, surface):
 
 def menu(surface, fonte):
     surface.blit(tela_menu, (0, 0))
-    
-    desenhar_texto("MILKWAY", fonte, BRANCO, (425, 100), surface)
-    
-    # pygame.draw.rect(surface, BRANCO, botao_continuar)
-    # desenhar_texto("1. Continuar", fonte, PRETO, (botao_continuar.x + 75, botao_continuar.y + 10),surface)
+    fonte_titulo = pygame.font.SysFont("arial", 50, True, False)
+    desenhar_texto("MILKWAY", fonte_titulo, BRANCO, (425, 100), surface)
     
     pygame.draw.rect(surface, BRANCO, botao_novo_jogo)
     desenhar_texto("1. Novo Jogo", fonte, PRETO, (botao_novo_jogo.x + 65, botao_novo_jogo.y + 10),surface)
@@ -81,11 +78,13 @@ def novo_jogo(surface, nave_jogador, naves_inimigas, screen_width, screen_height
     surface.blit(background, (0, 0))
     desenhar_texto(f"SCORE: {score}", fonte, BRANCO, (30, 30), surface)
     nave_jogador.update(screen_width, screen_height, surface)
-
-    for nave in naves_inimigas[:]:  
-        colisao = nave.update(nave_jogador)  
-        surface.blit(nave.imagem, nave.posicao) 
-        if colisao:
+    
+    for nave_inimiga in naves_inimigas[:]: 
+        nave_inimiga.update(nave_jogador)  
+        surface.blit(nave_inimiga.imagem, nave_inimiga.posicao) 
+        if nave_jogador.pontos_vida <= 0:
+            if nave_inimiga.destruida:
+                naves_inimigas.remove(nave_inimiga)
             return GAME_OVER
 
     for powerUp in powerUps:
@@ -96,8 +95,6 @@ def novo_jogo(surface, nave_jogador, naves_inimigas, screen_width, screen_height
     score = checar_colisao_bala_nave(nave_jogador.bullets ,naves_inimigas,score)
     pygame.display.flip()
     return score
-
-
 
 
 def melhores_jogadores(surface, top_usuarios):
@@ -196,7 +193,6 @@ def checar_colisao_bala_nave(balas, naves_inimigas, score):
         for nave in naves_inimigas:
             if bala.rect.colliderect(nave.rect):
                 nave.pontos_vida -= 10 
-                print(nave.pontos_vida) 
 
                 if bala not in balas_para_remover:
                     balas_para_remover.append(bala)
@@ -221,6 +217,10 @@ def desenha_tela_game_over(surface):
     
 def desenha_tela_ganhador(surface):
     surface.blit(tela_melhores_jogadores, (0, 0))
+    fonte = pygame.font.SysFont("arial", 60, True, False)
+
+    desenhar_texto("Vitória épica!!!", fonte, BRANCO, (180, 300),surface)
+
 
     
     

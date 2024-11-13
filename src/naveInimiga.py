@@ -8,12 +8,13 @@ class NaveInimiga(NaveBase):
         self.tempo_parado_decorrido = 0  
         self.movendo = False
         self.rect = self.imagem.get_rect(topleft=posicao)
+        self.destruida = False
 
 
     def checar_colisao(self, nave_jogador):
         if self.rect.colliderect(nave_jogador.rect):
-            nave_jogador.pontos_vida -= 10 
-            print(nave_jogador.pontos_vida)
+            nave_jogador.pontos_vida -= 100 
+            self.destruida = True 
             return True
         
         return False
@@ -25,14 +26,12 @@ class NaveInimiga(NaveBase):
     def update(self,nave_jogador):
         tempo_atual = pygame.time.get_ticks()
 
-        # Verifica se já passou o tempo de parada
         if tempo_atual >= self.tempo_parado:
             self.movendo = True
 
-        # Movimenta a nave para baixo se a flag estiver ativada
         if self.movendo:
-            self.posicao[1] += self.velocidade  # Movimenta para baixo conforme a velocidade
-            self.rect.topleft=self.posicao      #Atualiza a colisão da nave de acordo com a posição
+            self.posicao[1] += self.velocidade  
+            self.rect.topleft=self.posicao     
        
         return self.checar_colisao(nave_jogador)
 
@@ -41,3 +40,6 @@ class NaveInimiga(NaveBase):
         # if self.posicao[1] > 600:  # Suponha que 600 seja a altura da tela
         #     return True  # Retorna True se a nave deve ser removida (fora da tela)
         # return False
+
+    def __del__(self):
+        print(f"Destruindo a nave inimiga.")
