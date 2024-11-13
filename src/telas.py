@@ -221,7 +221,6 @@ def desenha_tela_game_over(surface):
     
 def desenha_tela_ganhador(surface):
     surface.blit(tela_melhores_jogadores, (0, 0))
-    pygame.display.flip()
 
     
     

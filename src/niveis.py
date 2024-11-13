@@ -11,12 +11,12 @@ def gerar_niveis(surface, quantidade_naves, pontos_vida):
 
         nave_inimiga = NaveInimiga(
             imagem = "../assets/images/naveEspacial.png",
-            velocidade = 0.3,
+            velocidade = 0.5,
             posicao = [x_posicao, -100],  
             pontos_vida = pontos_vida,
             potencia_tiro = 10,
             tempo_recarga = 1.5,
-            tempo_parado=pygame.time.get_ticks() + random.randint(50, 1000)  #100000
+            tempo_parado=pygame.time.get_ticks() + random.randint(50, 100000)  #100000
         )
         naves_inimigas.append(nave_inimiga)
     

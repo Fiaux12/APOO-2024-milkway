@@ -4,13 +4,13 @@
         "screen_height" : 600
     },
     "NaveJogador": {
-        "velocidade" : 0.5,
+        "velocidade" : 1,
         "pontos_vida" : 100,
         "potencia_tiro" : 100,
         "tempo_recarga" : 100        
     },
     "QtdInimigos": {
-        "valor" : 2
+        "valor" : 20
     }
 
       

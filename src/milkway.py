@@ -83,7 +83,9 @@ def inicio_jogo():
                 tempo_game_over = pygame.time.get_ticks()
             else: 
                 score = valor
-                if score == int(settings["QtdInimigos"]["valor"]) * 10:
+                ganhar = int(settings["QtdInimigos"]["valor"]) * 10
+                if score == ganhar:
+                    tempo_winner = pygame.time.get_ticks()
                     estado = WINNER
 
 
