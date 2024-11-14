@@ -26,11 +26,6 @@ nave_jogador = NaveJogador(
     aprimoramentos = {}
 )
 
-def reinicia_jogo():
-    naves_inimigas = niveis.gerar_niveis(surface)
-    score = 0
-    nave_jogador.bullets = []
-
 
 def inicio_jogo():
     global estado
@@ -70,11 +65,13 @@ def inicio_jogo():
             nave_jogador.pontos_vida = settings.pontos_vida_jogador
             valor = None
             valor = telas.novo_jogo(surface, nave_jogador, naves_inimigas, score, fonte)
-            if valor == telas.GAME_OVER:
+            if valor == telas.GAME_OVER or (score == 0 and len(naves_inimigas) == 0):
                 usuario_atual.pontos = score
                 usuario_atual.atualizar()
                 tempo_game_over = pygame.time.get_ticks()
-                reinicia_jogo()
+                naves_inimigas = niveis.gerar_niveis(surface)
+                score = 0
+                nave_jogador.bullets = []
                 estado = telas.GAME_OVER
 
             else: 
@@ -83,8 +80,10 @@ def inicio_jogo():
                 usuario_atual.atualizar()
 
                 pontos = settings.qtd_inimigas * 10
-                if score == pontos:
-                    reinicia_jogo()
+                if score == pontos or len(naves_inimigas) == 0:
+                    naves_inimigas = niveis.gerar_niveis(surface)
+                    score = 0
+                    nave_jogador.bullets = []
                     tempo_winner = pygame.time.get_ticks()
                     estado = telas.WINNER
 

@@ -34,5 +34,3 @@ class PowerUp(ObjetoJogo):
             self.draw(surface)
             self.checar_colisao(nave)
     
-    def __del__(self):
-        pass

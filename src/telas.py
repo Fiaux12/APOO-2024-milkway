@@ -2,6 +2,7 @@ import pygame
 import manipularArquivos 
 from powerUp import PowerUp
 from usuario import Usuario
+from naveInimiga import NaveInimiga
 import time
 import settings
 import random 
@@ -85,10 +86,13 @@ def novo_jogo(surface, nave_jogador, naves_inimigas, score, fonte):
     for nave_inimiga in naves_inimigas[:]: 
         nave_inimiga.update(nave_jogador)  
         surface.blit(nave_inimiga.imagem, nave_inimiga.posicao) 
+        if nave_inimiga.posicao[1] > surface.get_height():
+            naves_inimigas.remove(nave_inimiga)
         if nave_jogador.pontos_vida <= 0:
             if nave_inimiga.destruida:
                 naves_inimigas.remove(nave_inimiga)
             return GAME_OVER
+
 
     for powerUp in powerUps:
         if powerUp.coletado == False:
@@ -193,9 +197,8 @@ def checar_colisao_bala_nave(balas, potencia_tiro, naves_inimigas, score):
 
     for bala in balas:
         for nave in naves_inimigas:
-            if bala.rect.colliderect(nave.rect):
+            if nave.posicao[1] > -60 and bala.rect.colliderect(nave.rect):
                 nave.pontos_vida -= potencia_tiro 
-                print(potencia_tiro)
 
                 if bala not in balas_para_remover:
                     balas_para_remover.append(bala)

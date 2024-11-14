@@ -13,7 +13,7 @@ class NaveJogador(NaveBase):
         self.rect = self.imagem.get_rect(topleft=posicao)
 
     def atira(self):
-        bullet = Bullet(self.posicao, self.potencia_tiro, "../assets/images/asteroideAzul1.png", 1)
+        bullet = Bullet(self.posicao, "../assets/images/asteroideAzul1.png", 1)
         self.bullets.append(bullet)
 
     def draw(self, surface):
@@ -48,7 +48,7 @@ class NaveJogador(NaveBase):
         else:
             self.space_pressed = False
         for bullet in self.bullets:
-            bullet.move()
+            bullet.update()
             bullet.draw(surface)
 
         #Redimenciona e desenha a nave
