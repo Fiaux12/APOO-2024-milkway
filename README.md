@@ -5,7 +5,9 @@
 
 ### Ideia do Jogo
 
-Pensando na importancia da programação orientada a objetos para o crescimento de novos proficionais na área da engenharia, criamos esse jogo com o objetivo de melhorar nossa hablidades e nos tornar proficionais mais qualificados para o mercado de trabalho. 
+Considerando a importância da programação orientada a objetos para o desenvolvimento de novos profissionais na área de engenharia, criamos este jogo com o objetivo de aprimorar nossas habilidades e nos tornar profissionais mais qualificados para o mercado de trabalho. 
+
+O jogo foi inspirado em um projeto anterior desenvolvido por um dos criadores, disponível neste link: [Milkway](https://github.com/TP-Coltec-UFMG/milkway). O grande diferencial desta versão é a introdução de naves inimigas, geradas aleatoriamente ao longo do eixo x, o que traz uma imprevisibilidade na posição inicial dos inimigos. Além disso, o jogo permite que o jogador dispare projéteis em direção às naves inimigas e oferece controle total de movimentação em todas as direções, o que eleva a complexidade e imersão da jogabilidade. Outra característica interessante é a inclusão de um placar que exibe os três melhores jogadores, incentivando a competição
 
 
 ### Pré-requisitos :heavy_check_mark:
@@ -33,4 +35,3 @@ $ python milkway.py
 [Amanda](https://github.com/Fiaux12),
 [Glaucus] ()
 [Lucas] ()
-
