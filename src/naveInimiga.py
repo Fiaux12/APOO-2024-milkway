@@ -36,5 +36,3 @@ class NaveInimiga(NaveBase):
        
         return self.checar_colisao(nave_jogador)
 
-    def __del__(self):
-        pass

@@ -2,6 +2,7 @@ import pygame
 import manipularArquivos 
 from powerUp import PowerUp
 from usuario import Usuario
+from naveInimiga import NaveInimiga
 import time
 import settings 
 
@@ -192,7 +193,7 @@ def checar_colisao_bala_nave(balas, potencia_tiro, naves_inimigas, score):
 
     for bala in balas:
         for nave in naves_inimigas:
-            if bala.rect.colliderect(nave.rect):
+            if nave.posicao[1] > -60 and bala.rect.colliderect(nave.rect):
                 nave.pontos_vida -= potencia_tiro 
 
                 if bala not in balas_para_remover:
