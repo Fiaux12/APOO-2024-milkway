@@ -7,20 +7,6 @@ import time
 import settings
 import random 
 
-#powerUpVel = PowerUp(
-#    imagem="../assets/images/powerupVEL.png",
-#    posicao=[200, 300],
-#    tipo='vel',
-#    valor=0.5  
-#)
-
-#powerUpTiro = PowerUp(
-#    imagem="../assets/images/powerupTIRO.png",
-#    posicao=[800, 300],
-#    tipo='tiro',
-#    valor=10 
-#)
-
 powerUps = []
 
 # Estados do jogo
@@ -37,7 +23,6 @@ BRANCO = (255, 255, 255)
 PRETO = (0, 0, 0)
 AZUL = (0 , 0, 129)
 
-#Fonte
 
 #configurações do jogo
 settings = manipularArquivos.ler_configuracoes()
