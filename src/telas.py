@@ -85,10 +85,13 @@ def novo_jogo(surface, nave_jogador, naves_inimigas, score, fonte):
     for nave_inimiga in naves_inimigas[:]: 
         nave_inimiga.update(nave_jogador)  
         surface.blit(nave_inimiga.imagem, nave_inimiga.posicao) 
+        if nave_inimiga.posicao[1] > surface.get_height():
+            naves_inimigas.remove(nave_inimiga)
         if nave_jogador.pontos_vida <= 0:
             if nave_inimiga.destruida:
                 naves_inimigas.remove(nave_inimiga)
             return GAME_OVER
+
 
     for powerUp in powerUps:
         if powerUp.coletado == False:
