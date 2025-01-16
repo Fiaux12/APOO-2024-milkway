@@ -2,7 +2,7 @@ import pygame
 from posicao import Posicao
 from abc import ABC, abstractmethod
 
-class ObjetoJogo(ABC):
+class InterfaceJogo(ABC):
     def __init__(self, image, velocidade, posicao: Posicao):
         self.imagem = pygame.image.load(image)
 

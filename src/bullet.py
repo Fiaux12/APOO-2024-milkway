@@ -1,8 +1,8 @@
 import pygame
-from objetoJogo import ObjetoJogo
+from objetoJogo import InterfaceJogo
 
 
-class Bullet(ObjetoJogo):
+class Bullet(InterfaceJogo):
     def __init__(self, posicao, imagem, velocidade):
         super().__init__(imagem, velocidade, posicao)
         self.rect = self.imagem.get_rect(center=(self.posicao[0], self.posicao[1]))

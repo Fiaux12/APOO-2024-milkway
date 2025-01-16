@@ -1,9 +1,9 @@
 import pygame
-from objetoJogo import ObjetoJogo
+from objetoJogo import InterfaceJogo
 import settings 
 
 
-class PowerUp(ObjetoJogo):
+class PowerUp(InterfaceJogo):
     def __init__(self, imagem, posicao, tipo, valor):
         super().__init__(imagem, velocidade=0, posicao=posicao)
         self.tipo = tipo 

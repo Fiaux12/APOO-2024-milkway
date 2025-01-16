@@ -1,8 +1,8 @@
 import pygame
-from objetoJogo import ObjetoJogo
+from objetoJogo import InterfaceJogo
 
 
-class NaveBase(ObjetoJogo):
+class NaveBase(InterfaceJogo):
     def __init__(self, imagem, velocidade, posicao, pontos_vida):
         super().__init__(imagem, velocidade, posicao)
         self.pontos_vida = pontos_vida
